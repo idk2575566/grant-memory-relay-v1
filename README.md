@@ -5,13 +5,22 @@ A polished UI-only prototype for fast note capture and daily follow-through.
 ## Features
 
 - ⚡ Quick capture form (note, optional due date, category, priority)
+- 🎯 One-click category CTA buttons that auto-apply default priority (Kids=high, Work=medium, etc.)
 - 📋 Open notes list sorted by due date then priority
-- ✅ Note actions: Done, Snooze (+1 day), Delete
+- ✅ Note actions: Add to Calendar, Done, Snooze (+1 day), Delete
 - 🌅 Morning top-3 preview (simulated from open notes)
 - 🌙 Daily digest preview (simulated)
 - 📱 Mobile-friendly responsive layout
 - 💾 Local-only persistence via `localStorage`
 - 🔔 Toast confirmations + clear empty states
+
+## Google Calendar quick-add behavior
+
+Each open note includes an **Add to Calendar** button that opens Google Calendar's event template page in a new tab using URL parameters only (no OAuth required).
+
+- `text` is prefilled from the note text.
+- `details` includes category + priority context.
+- If a due date exists, `dates` is sent as an all-day range (`due` to `due + 1 day`) so it lands on the expected day.
 
 ## Run locally
 

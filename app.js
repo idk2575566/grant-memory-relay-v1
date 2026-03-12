@@ -8,6 +8,7 @@ const els = {
   due: document.getElementById('note-due'),
   category: document.getElementById('note-category'),
   priority: document.getElementById('note-priority'),
+  categoryCtas: document.getElementById('category-ctas'),
   notesList: document.getElementById('notes-list'),
   notesEmpty: document.getElementById('notes-empty'),
   openCount: document.getElementById('open-count'),
@@ -19,6 +20,14 @@ const els = {
 
 let notes = loadNotes();
 render();
+
+els.categoryCtas.addEventListener('click', (e) => {
+  const button = e.target.closest('.btn-cta');
+  if (!button) return;
+  els.category.value = button.dataset.category;
+  els.priority.value = button.dataset.priority || 'medium';
+  toast(`Set ${button.dataset.category} • ${capitalize(els.priority.value)} priority`);
+});
 
 els.form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -82,6 +91,7 @@ function render() {
       <div class="note-main"></div>
       <div class="note-meta"></div>
       <div class="note-actions">
+        <a class="btn-calendar" href="${buildCalendarUrl(n)}" target="_blank" rel="noopener noreferrer">Add to Calendar</a>
         <button class="btn-done" data-action="done">Done</button>
         <button class="btn-snooze" data-action="snooze">Snooze +1 day</button>
         <button class="btn-delete" data-action="delete">Delete</button>
@@ -162,6 +172,30 @@ function renderDigest(open) {
     • Due today: ${dueToday}<br>
     • Next focus: ${next ? escapeHtml(next.text) : 'No pending items — nice.'}
   `;
+}
+
+function buildCalendarUrl(note) {
+  const text = note.text;
+  const details = `Created in Grant Memory Relay\nCategory: ${note.category}\nPriority: ${capitalize(note.priority)}`;
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text,
+    details
+  });
+
+  if (note.due) {
+    const start = note.due.replaceAll('-', '');
+    const end = addDaysToDateInput(note.due, 1).replaceAll('-', '');
+    params.set('dates', `${start}/${end}`);
+  }
+
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
+function addDaysToDateInput(value, days) {
+  const d = new Date(`${value}T00:00:00`);
+  d.setDate(d.getDate() + days);
+  return toDateInput(d);
 }
 
 function toast(message) {

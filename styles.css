@@ -68,6 +68,23 @@ h2 { font-size: 1.05rem; margin: 0; }
 .field span { font-size: 0.85rem; color: var(--muted); }
 .field-full { grid-column: 1 / -1; }
 
+.category-ctas {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.btn-cta {
+  width: auto;
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  background: #eef2ff;
+  border-color: #c7d2fe;
+  color: #3730a3;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
 input, select, textarea, button {
   width: 100%;
   border: 1px solid var(--line);
@@ -102,8 +119,17 @@ textarea { min-height: 88px; resize: vertical; }
 .note-main { font-weight: 600; }
 .note-meta { color: var(--muted); font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .note-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.note-actions button { width: auto; padding: 0.45rem 0.65rem; font-size: 0.86rem; }
+.note-actions button,
+.note-actions a {
+  width: auto;
+  padding: 0.45rem 0.65rem;
+  font-size: 0.86rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  text-decoration: none;
+}
 
+.btn-calendar { color: #1d4ed8; border-color: #bfdbfe; background: #eff6ff; }
 .btn-done { color: var(--good); border-color: #99f6e4; background: #f0fdfa; }
 .btn-snooze { color: var(--warn); border-color: #fed7aa; background: #fff7ed; }
 .btn-delete { color: var(--danger); border-color: #fecaca; background: #fef2f2; }

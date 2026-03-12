@@ -19,6 +19,17 @@
         <span class="hint">&lt;10 seconds</span>
       </div>
       <form id="note-form" class="form-grid">
+        <div class="field field-full">
+          <span>Quick category</span>
+          <div class="category-ctas" id="category-ctas">
+            <button type="button" class="btn-cta" data-category="Kids (Finley & Harrison)" data-priority="high">Kids (Finley & Harrison)</button>
+            <button type="button" class="btn-cta" data-category="Chloe Friends" data-priority="medium">Chloe Friends</button>
+            <button type="button" class="btn-cta" data-category="Couple Friends" data-priority="medium">Couple Friends</button>
+            <button type="button" class="btn-cta" data-category="Work" data-priority="medium">Work</button>
+            <button type="button" class="btn-cta" data-category="Things We Do" data-priority="low">Things We Do</button>
+          </div>
+        </div>
+
         <label class="field field-full">
           <span>Note</span>
           <textarea id="note-text" required maxlength="280" placeholder="What should I remember or do?"></textarea>
@@ -32,8 +43,12 @@
         <label class="field">
           <span>Category</span>
           <select id="note-category">
-            <option>Personal</option>
+            <option>Kids (Finley & Harrison)</option>
+            <option>Chloe Friends</option>
+            <option>Couple Friends</option>
             <option>Work</option>
+            <option>Things We Do</option>
+            <option>Personal</option>
             <option>Family</option>
             <option>Health</option>
             <option>Errands</option>
