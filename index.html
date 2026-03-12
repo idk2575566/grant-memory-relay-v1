@@ -31,8 +31,14 @@
         </div>
 
         <label class="field field-full">
-          <span>What matters?</span>
-          <textarea id="note-text" required maxlength="280" placeholder="One clear note…"></textarea>
+          <div class="field-row">
+            <span>What matters?</span>
+            <span id="voice-status" class="voice-status" aria-live="polite">Voice: stopped</span>
+          </div>
+          <div class="note-input-wrap">
+            <textarea id="note-text" required maxlength="280" placeholder="One clear note…"></textarea>
+            <button id="voice-btn" type="button" class="btn-voice" aria-label="Start voice note" title="Voice note">🎙️</button>
+          </div>
         </label>
 
         <label class="field">
@@ -65,7 +71,9 @@
           </select>
         </label>
 
-        <button class="btn btn-primary field-full" type="submit">Save note ✅</button>
+        <div class="sticky-submit field-full">
+          <button class="btn btn-primary" type="submit">Save note ✅</button>
+        </div>
       </form>
     </section>
 

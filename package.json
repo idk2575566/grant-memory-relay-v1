@@ -1,0 +1,26 @@
+{
+  "name": "grant-memory-relay-v1",
+  "version": "1.0.0",
+  "description": "A polished UI-only prototype for fast note capture and daily follow-through.",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idk2575566/grant-memory-relay-v1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idk2575566/grant-memory-relay-v1/issues"
+  },
+  "homepage": "https://github.com/idk2575566/grant-memory-relay-v1#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}

@@ -29,10 +29,13 @@ const els = {
   top3List: document.getElementById('top3-list'),
   top3Empty: document.getElementById('top3-empty'),
   digest: document.getElementById('digest-box'),
-  toast: document.getElementById('toast')
+  toast: document.getElementById('toast'),
+  voiceBtn: document.getElementById('voice-btn'),
+  voiceStatus: document.getElementById('voice-status')
 };
 
 let notes = loadNotes();
+const voice = setupVoiceCapture();
 render();
 
 els.categoryCtas.addEventListener('click', (e) => {
@@ -41,6 +44,22 @@ els.categoryCtas.addEventListener('click', (e) => {
   els.category.value = button.dataset.category;
   els.priority.value = button.dataset.priority || 'medium';
   toast(`Set: ${categoryChip(button.dataset.category)} • ${capitalize(els.priority.value)}`);
+});
+
+els.voiceBtn?.addEventListener('click', () => {
+  if (!voice) {
+    toast('Voice capture not supported on this browser.');
+    return;
+  }
+  if (voice.listening) {
+    voice.recognition.stop();
+    return;
+  }
+  try {
+    voice.recognition.start();
+  } catch {
+    toast('Voice capture unavailable right now.');
+  }
 });
 
 els.form.addEventListener('submit', (e) => {
@@ -101,6 +120,7 @@ function render() {
   for (const n of open) {
     const li = document.createElement('li');
     li.className = 'note';
+    li.dataset.id = n.id;
     li.innerHTML = `
       <div class="note-main"></div>
       <div class="note-meta"></div>
@@ -123,7 +143,7 @@ function render() {
     li.querySelector('.note-actions').addEventListener('click', (e) => {
       const action = e.target.getAttribute('data-action');
       if (!action) return;
-      handleAction(n.id, action);
+      handleAction(n.id, action, li);
     });
 
     els.notesList.appendChild(li);
@@ -133,13 +153,16 @@ function render() {
   renderDigest(open);
 }
 
-function handleAction(id, action) {
+function handleAction(id, action, noteEl) {
   const note = notes.find(n => n.id === id);
   if (!note) return;
 
   if (action === 'done') {
     note.done = true;
     toast(`${COACH}: good close.`);
+    persist();
+    render();
+    return;
   }
 
   if (action === 'snooze') {
@@ -147,16 +170,21 @@ function handleAction(id, action) {
     base.setDate(base.getDate() + 1);
     note.due = toDateInput(base);
     toast(`${COACH}: nudged to tomorrow.`);
+    persist();
+    render();
+    return;
   }
 
   if (action === 'delete') {
     if (!confirm('Delete this note?')) return;
-    notes = notes.filter(n => n.id !== id);
-    toast('Removed. Keep the list clean.');
+    noteEl?.classList.add('is-removing');
+    setTimeout(() => {
+      notes = notes.filter(n => n.id !== id);
+      persist();
+      render();
+      toast('Removed. Keep the list clean.');
+    }, 150);
   }
-
-  persist();
-  render();
 }
 
 function renderTop3(open) {
@@ -221,6 +249,63 @@ function toast(message) {
   els.toast.classList.add('show');
   clearTimeout(toast._timer);
   toast._timer = setTimeout(() => els.toast.classList.remove('show'), 1700);
+}
+
+function setupVoiceCapture() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition || !els.voiceBtn || !els.voiceStatus) {
+    if (els.voiceBtn) els.voiceBtn.disabled = true;
+    if (els.voiceStatus) els.voiceStatus.textContent = 'Voice: unsupported';
+    return null;
+  }
+
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'en-GB';
+  recognition.interimResults = true;
+  recognition.continuous = false;
+
+  const state = { recognition, listening: false, transcript: '' };
+
+  recognition.addEventListener('start', () => {
+    state.listening = true;
+    state.transcript = '';
+    els.voiceBtn.classList.add('is-listening');
+    els.voiceBtn.setAttribute('aria-label', 'Stop voice note');
+    els.voiceStatus.textContent = 'Voice: listening…';
+  });
+
+  recognition.addEventListener('result', (event) => {
+    let finalChunk = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const chunk = event.results[i][0]?.transcript || '';
+      if (event.results[i].isFinal) finalChunk += chunk;
+    }
+    if (finalChunk.trim()) state.transcript += ` ${finalChunk.trim()}`;
+  });
+
+  recognition.addEventListener('end', () => {
+    state.listening = false;
+    els.voiceBtn.classList.remove('is-listening');
+    els.voiceBtn.setAttribute('aria-label', 'Start voice note');
+    const spoken = state.transcript.trim();
+    if (spoken) {
+      const prefix = els.text.value.trim() ? `${els.text.value.trim()} ` : '';
+      els.text.value = `${prefix}${spoken}`.trim();
+      els.voiceStatus.textContent = 'Voice: stopped';
+      toast('Voice note appended.');
+    } else {
+      els.voiceStatus.textContent = 'Voice: stopped';
+    }
+  });
+
+  recognition.addEventListener('error', () => {
+    state.listening = false;
+    els.voiceBtn.classList.remove('is-listening');
+    els.voiceStatus.textContent = 'Voice: stopped';
+    toast('Voice capture stopped.');
+  });
+
+  return state;
 }
 
 function formatDate(value) {
