@@ -16,6 +16,7 @@ const els = {
   openCount: document.getElementById('open-count'),
   top3List: document.getElementById('top3-list'),
   top3Empty: document.getElementById('top3-empty'),
+  miniCalendar: document.getElementById('mini-calendar'),
   digest: document.getElementById('digest-box'),
   toast: document.getElementById('toast'),
   achievement: document.getElementById('achievement-popup'),
@@ -141,6 +142,7 @@ function render() {
   }
 
   renderTop3(open);
+  renderMiniCalendar(open);
   renderDigest(open);
 }
 
@@ -192,6 +194,37 @@ function renderTop3(open) {
     li.querySelector('.note-main').textContent = n.text;
     li.querySelector('.note-meta').textContent = `${categoryChip(n.category)} • ${capitalize(n.priority)}${n.due ? ` • due ${formatDate(n.due)}` : ''}`;
     els.top3List.appendChild(li);
+  }
+}
+
+function renderMiniCalendar(open) {
+  if (!els.miniCalendar) return;
+
+  const dueCounts = open.reduce((acc, note) => {
+    if (!note.due) return acc;
+    acc[note.due] = (acc[note.due] || 0) + 1;
+    return acc;
+  }, {});
+
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+
+  els.miniCalendar.innerHTML = '';
+  for (let i = 0; i < 5; i++) {
+    const day = new Date(start);
+    day.setDate(start.getDate() + i);
+    const key = toDateInput(day);
+    const count = dueCounts[key] || 0;
+
+    const li = document.createElement('li');
+    li.className = `mini-day ${count > 0 ? 'has-tasks' : 'no-tasks'}`;
+    if (i === 0) li.classList.add('is-today');
+    li.innerHTML = `
+      <span class="mini-dow">${formatDayShort(day)}</span>
+      <strong class="mini-date">${day.getDate()}</strong>
+      <span class="mini-count">${count > 0 ? `${count} due` : 'No tasks'}</span>
+    `;
+    els.miniCalendar.appendChild(li);
   }
 }
 
@@ -330,6 +363,10 @@ function setupVoiceCapture() {
 function formatDate(value) {
   const d = new Date(value + 'T00:00:00');
   return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function formatDayShort(date) {
+  return date.toLocaleDateString(undefined, { weekday: 'short' });
 }
 
 function toDateInput(d) {

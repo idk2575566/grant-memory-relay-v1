@@ -41,6 +41,14 @@
       </div>
     </header>
 
+    <section class="card" aria-labelledby="upcoming-title">
+      <div class="card-head">
+        <h2 id="upcoming-title"><span class="icon" aria-hidden="true"><svg><use href="#i-calendar"/></svg></span>Next 5 Days</h2>
+        <span class="pill">Due snapshot</span>
+      </div>
+      <ul id="mini-calendar" class="mini-calendar" aria-label="Upcoming due notes"></ul>
+    </section>
+
     <section class="card" aria-labelledby="capture-title">
       <div class="card-head">
         <h2 id="capture-title">
@@ -53,7 +61,8 @@
         <div class="field field-full">
           <span>Pick a lane</span>
           <div class="category-ctas" id="category-ctas">
-            <button type="button" class="btn-cta" data-category="Kids (Finley & Harrison)" data-priority="high"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Kids</button>
+            <button type="button" class="btn-cta" data-category="Kids - Finley" data-priority="high"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Finley</button>
+            <button type="button" class="btn-cta" data-category="Kids - Harrison" data-priority="high"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Harrison</button>
             <button type="button" class="btn-cta" data-category="Chloe Friends" data-priority="medium"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Chloe Friends</button>
             <button type="button" class="btn-cta" data-category="Couple Friends" data-priority="medium"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Couple Friends</button>
             <button type="button" class="btn-cta" data-category="Work" data-priority="medium"><span class="icon" aria-hidden="true"><svg><use href="#i-briefcase"/></svg></span>Work</button>
@@ -80,6 +89,8 @@
         <label class="field">
           <span>Category</span>
           <select id="note-category">
+            <option>Kids - Finley</option>
+            <option>Kids - Harrison</option>
             <option>Kids (Finley & Harrison)</option>
             <option>Chloe Friends</option>
             <option>Couple Friends</option>

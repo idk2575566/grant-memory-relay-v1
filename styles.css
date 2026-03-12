@@ -248,6 +248,61 @@ a:focus-visible {
 
 .stack { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.62rem; }
 
+.mini-calendar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.mini-day {
+  border: 1px solid #d7e4fd;
+  border-radius: 12px;
+  padding: 0.52rem 0.3rem;
+  background: #f8fbff;
+  display: grid;
+  gap: 0.16rem;
+  text-align: center;
+}
+
+.mini-day.has-tasks {
+  border-color: #bdd0f8;
+  background: #edf3ff;
+}
+
+.mini-day.no-tasks {
+  border-style: dashed;
+}
+
+.mini-day.is-today {
+  box-shadow: inset 0 0 0 1px rgba(71, 109, 255, 0.32);
+}
+
+.mini-dow {
+  font-size: 0.69rem;
+  font-weight: 700;
+  color: #4f6590;
+}
+
+.mini-date {
+  font-size: 1rem;
+  color: #1b2b4b;
+  line-height: 1;
+}
+
+.mini-count {
+  font-size: 0.68rem;
+  color: #5f7399;
+  min-height: 1.05rem;
+}
+
+.mini-day.has-tasks .mini-count {
+  color: #2c4d86;
+  font-weight: 620;
+}
+
 .note {
   border: 1px solid #dee8fb;
   border-radius: 13px;
