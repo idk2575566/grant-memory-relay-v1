@@ -554,3 +554,10 @@ button:active { transform: scale(0.985); }
     scroll-behavior: auto !important;
   }
 }
+
+
+/* iPhone/Safari form overflow guards */
+.field{min-width:0;}
+.form-grid{min-width:0;}
+input, select, textarea {max-width:100%; min-width:0;}
+input[type="date"]{display:block; width:100%; min-width:0;}
