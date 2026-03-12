@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grant Memory Relay v1</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <h1>Grant Memory Relay</h1>
+      <p>Capture fast. Follow through every day.</p>
+    </header>
+
+    <section class="card" aria-labelledby="capture-title">
+      <div class="card-head">
+        <h2 id="capture-title">Quick Capture</h2>
+        <span class="hint">&lt;10 seconds</span>
+      </div>
+      <form id="note-form" class="form-grid">
+        <label class="field field-full">
+          <span>Note</span>
+          <textarea id="note-text" required maxlength="280" placeholder="What should I remember or do?"></textarea>
+        </label>
+
+        <label class="field">
+          <span>Due date (optional)</span>
+          <input id="note-due" type="date" />
+        </label>
+
+        <label class="field">
+          <span>Category</span>
+          <select id="note-category">
+            <option>Personal</option>
+            <option>Work</option>
+            <option>Family</option>
+            <option>Health</option>
+            <option>Errands</option>
+            <option>Other</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>Priority</span>
+          <select id="note-priority">
+            <option value="high">High</option>
+            <option value="medium" selected>Medium</option>
+            <option value="low">Low</option>
+          </select>
+        </label>
+
+        <button class="btn btn-primary field-full" type="submit">Save note</button>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="top3-title">
+      <div class="card-head">
+        <h2 id="top3-title">Morning Top-3 Preview</h2>
+        <span class="pill">Simulated</span>
+      </div>
+      <ul id="top3-list" class="stack"></ul>
+      <p id="top3-empty" class="empty">No open notes yet. Add a note to build your top 3.</p>
+    </section>
+
+    <section class="card" aria-labelledby="open-title">
+      <div class="card-head">
+        <h2 id="open-title">Open Notes</h2>
+        <span id="open-count" class="pill">0 open</span>
+      </div>
+      <ul id="notes-list" class="stack"></ul>
+      <p id="notes-empty" class="empty">You’re clear right now. Capture a note to get started.</p>
+    </section>
+
+    <section class="card" aria-labelledby="digest-title">
+      <div class="card-head">
+        <h2 id="digest-title">Daily Digest Preview (7:00 PM)</h2>
+        <span class="pill">Simulated</span>
+      </div>
+      <div id="digest-box" class="digest"></div>
+    </section>
+  </main>
+
+  <div id="toast" role="status" aria-live="polite" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
