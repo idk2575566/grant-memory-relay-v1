@@ -3,18 +3,6 @@ const COACH = 'Coach Milo';
 
 const priorityRank = { high: 0, medium: 1, low: 2 };
 
-const categoryIcons = {
-  'Kids (Finley & Harrison)': '🧒',
-  'Chloe Friends': '🫶',
-  'Couple Friends': '🥂',
-  Work: '💼',
-  'Things We Do': '🎯',
-  Personal: '✨',
-  Family: '🏡',
-  Health: '💪',
-  Errands: '🛒',
-  Other: '🗂️'
-};
 
 const els = {
   form: document.getElementById('note-form'),
@@ -127,23 +115,24 @@ function render() {
       <div class="note-main"></div>
       <div class="note-meta"></div>
       <div class="note-actions">
-        <a class="btn-calendar" href="${buildCalendarUrl(n)}" target="_blank" rel="noopener noreferrer">📅 Calendar</a>
-        <button class="btn-done" data-action="done">✅ Done</button>
-        <button class="btn-snooze" data-action="snooze">⏰ +1 day</button>
-        <button class="btn-delete" data-action="delete">🗑️ Delete</button>
+        <a class="btn-calendar" href="${buildCalendarUrl(n)}" target="_blank" rel="noopener noreferrer">${actionLabel('calendar', 'Calendar')}</a>
+        <button class="btn-done" data-action="done">${actionLabel('check', 'Done')}</button>
+        <button class="btn-snooze" data-action="snooze">${actionLabel('clock', '+1 day')}</button>
+        <button class="btn-delete" data-action="delete">${actionLabel('trash', 'Delete')}</button>
       </div>
     `;
 
     li.querySelector('.note-main').textContent = n.text;
     const metaBits = [
       categoryChip(n.category),
-      `⚡ ${capitalize(n.priority)}`,
-      n.due ? `🗓️ ${formatDate(n.due)}` : 'No due date'
+      `Priority ${capitalize(n.priority)}`,
+      n.due ? `Due ${formatDate(n.due)}` : 'No due date'
     ];
     li.querySelector('.note-meta').textContent = metaBits.join(' • ');
 
     li.querySelector('.note-actions').addEventListener('click', (e) => {
-      const action = e.target.getAttribute('data-action');
+      const actionEl = e.target.closest('[data-action]');
+      const action = actionEl?.getAttribute('data-action');
       if (!action) return;
       handleAction(n.id, action, li);
     });
@@ -222,7 +211,11 @@ function renderDigest(open) {
 }
 
 function categoryChip(category) {
-  return `${categoryIcons[category] || '🗂️'} ${category}`;
+  return `Category ${category}`;
+}
+
+function actionLabel(icon, text) {
+  return `<span class="icon" aria-hidden="true"><svg><use href="#i-${icon}"/></svg></span><span>${text}</span>`;
 }
 
 function buildCalendarUrl(note) {
@@ -260,16 +253,16 @@ function showAchievement(action) {
   if (!els.achievement) return;
 
   const messages = {
-    save: { icon: '🏆', title: 'Momentum saved', body: 'Note captured. Nice pace.' },
-    done: { icon: '✅', title: 'Win recorded', body: 'Task complete. Keep rolling.' },
-    snooze: { icon: '⏰', title: 'Smart deferral', body: 'Rescheduled for tomorrow.' },
-    delete: { icon: '🧹', title: 'Clean slate', body: 'Removed and tidied up.' }
+    save: { badge: 'Milestone', title: 'Momentum saved', body: 'Note captured. Nice pace.' },
+    done: { badge: 'Progress', title: 'Win recorded', body: 'Task complete. Keep rolling.' },
+    snooze: { badge: 'Planning', title: 'Smart deferral', body: 'Rescheduled for tomorrow.' },
+    delete: { badge: 'Housekeeping', title: 'Clean slate', body: 'Removed and tidied up.' }
   };
 
   const entry = messages[action];
   if (!entry) return;
 
-  els.achievement.innerHTML = `<strong>${entry.icon} ${entry.title}</strong><span>${entry.body}</span>`;
+  els.achievement.innerHTML = `<strong>${entry.badge} · ${entry.title}</strong><span>${entry.body}</span>`;
   els.achievement.classList.add('show');
   clearTimeout(showAchievement._timer);
   showAchievement._timer = setTimeout(() => {

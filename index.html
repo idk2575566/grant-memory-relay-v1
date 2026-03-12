@@ -7,13 +7,32 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <svg class="icon-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="m4 20 4.3-1 9.9-9.9a1.6 1.6 0 0 0 0-2.3l-1-1a1.6 1.6 0 0 0-2.3 0L5 15.7 4 20zM13.5 6.5l4 4"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 1 0 6 0V6a3 3 0 0 0-3-3zM6 11v1a6 6 0 0 0 12 0v-1M12 18v3"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 19a4 4 0 0 0-8 0M12 12a3.2 3.2 0 1 0 0-6.4A3.2 3.2 0 0 0 12 12zm6 7a3.5 3.5 0 0 0-2.9-3.4M18 10a2.8 2.8 0 1 0 0-5.6M6 10a2.8 2.8 0 1 1 0-5.6M6 15.6A3.5 3.5 0 0 0 3 19"/></symbol>
+    <symbol id="i-briefcase" viewBox="0 0 24 24"><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m6 2H3v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9zM3 12h18"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9M12 12l8-8M12 8a4 4 0 1 0 4 4"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 9h16M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M8 10v8M12 10v8M16 10v8M6 7l1 13h10l1-13"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 4V2M12 22v-2M4 12H2M22 12h-2M5.6 5.6 4.2 4.2M19.8 19.8l-1.4-1.4M18.4 5.6l1.4-1.4M4.2 19.8l1.4-1.4M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 15.5A8.5 8.5 0 1 1 8.5 4 7 7 0 0 0 20 15.5z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7z"/></symbol>
+  </svg>
+
   <main class="app">
     <header class="hero">
-      <h1>Memory Relay ⚡</h1>
+      <h1>
+        <span class="icon" aria-hidden="true"><svg><use href="#i-bolt"/></svg></span>
+        Memory Relay
+      </h1>
       <p>Capture it now. Keep life moving.</p>
       <div class="milo-profile" aria-label="Coach Milo profile">
         <div class="milo-avatar" aria-hidden="true">
-          <span class="milo-face">🙂</span>
+          <span class="milo-face">M</span>
         </div>
         <div class="milo-copy">
           <strong>Coach Milo</strong>
@@ -24,18 +43,21 @@
 
     <section class="card" aria-labelledby="capture-title">
       <div class="card-head">
-        <h2 id="capture-title">Quick Capture ✍️</h2>
+        <h2 id="capture-title">
+          <span class="icon" aria-hidden="true"><svg><use href="#i-pencil"/></svg></span>
+          Quick Capture
+        </h2>
         <span class="hint">Coach Milo: under 10s</span>
       </div>
       <form id="note-form" class="form-grid">
         <div class="field field-full">
           <span>Pick a lane</span>
           <div class="category-ctas" id="category-ctas">
-            <button type="button" class="btn-cta" data-category="Kids (Finley & Harrison)" data-priority="high">🧒 Kids</button>
-            <button type="button" class="btn-cta" data-category="Chloe Friends" data-priority="medium">🫶 Chloe Friends</button>
-            <button type="button" class="btn-cta" data-category="Couple Friends" data-priority="medium">🥂 Couple Friends</button>
-            <button type="button" class="btn-cta" data-category="Work" data-priority="medium">💼 Work</button>
-            <button type="button" class="btn-cta" data-category="Things We Do" data-priority="low">🎯 Things We Do</button>
+            <button type="button" class="btn-cta" data-category="Kids (Finley & Harrison)" data-priority="high"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Kids</button>
+            <button type="button" class="btn-cta" data-category="Chloe Friends" data-priority="medium"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Chloe Friends</button>
+            <button type="button" class="btn-cta" data-category="Couple Friends" data-priority="medium"><span class="icon" aria-hidden="true"><svg><use href="#i-users"/></svg></span>Couple Friends</button>
+            <button type="button" class="btn-cta" data-category="Work" data-priority="medium"><span class="icon" aria-hidden="true"><svg><use href="#i-briefcase"/></svg></span>Work</button>
+            <button type="button" class="btn-cta" data-category="Things We Do" data-priority="low"><span class="icon" aria-hidden="true"><svg><use href="#i-target"/></svg></span>Things We Do</button>
           </div>
         </div>
 
@@ -46,7 +68,7 @@
           </div>
           <div class="note-input-wrap">
             <textarea id="note-text" required maxlength="280" placeholder="One clear note…"></textarea>
-            <button id="voice-btn" type="button" class="btn-voice" aria-label="Start voice note" title="Voice note">🎙️</button>
+            <button id="voice-btn" type="button" class="btn-voice" aria-label="Start voice note" title="Voice note"><span class="icon" aria-hidden="true"><svg><use href="#i-mic"/></svg></span></button>
           </div>
         </label>
 
@@ -81,14 +103,14 @@
         </label>
 
         <div class="sticky-submit field-full">
-          <button class="btn btn-primary" type="submit">Save note ✅</button>
+          <button class="btn btn-primary" type="submit">Save note</button>
         </div>
       </form>
     </section>
 
     <section class="card" aria-labelledby="top3-title">
       <div class="card-head">
-        <h2 id="top3-title">Today’s Top 3 🌅</h2>
+        <h2 id="top3-title"><span class="icon" aria-hidden="true"><svg><use href="#i-sun"/></svg></span>Today’s Top 3</h2>
         <span class="pill">Preview</span>
       </div>
       <ul id="top3-list" class="stack"></ul>
@@ -97,7 +119,7 @@
 
     <section class="card" aria-labelledby="open-title">
       <div class="card-head">
-        <h2 id="open-title">Open Notes 📌</h2>
+        <h2 id="open-title"><span class="icon" aria-hidden="true"><svg><use href="#i-folder"/></svg></span>Open Notes</h2>
         <span id="open-count" class="pill">0 open</span>
       </div>
       <ul id="notes-list" class="stack"></ul>
@@ -106,7 +128,7 @@
 
     <section class="card" aria-labelledby="digest-title">
       <div class="card-head">
-        <h2 id="digest-title">Evening Digest 🌙</h2>
+        <h2 id="digest-title"><span class="icon" aria-hidden="true"><svg><use href="#i-moon"/></svg></span>Evening Digest</h2>
         <span class="pill">7:00 PM preview</span>
       </div>
       <div id="digest-box" class="digest"></div>
