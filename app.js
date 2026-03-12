@@ -30,6 +30,7 @@ const els = {
   top3Empty: document.getElementById('top3-empty'),
   digest: document.getElementById('digest-box'),
   toast: document.getElementById('toast'),
+  achievement: document.getElementById('achievement-popup'),
   voiceBtn: document.getElementById('voice-btn'),
   voiceStatus: document.getElementById('voice-status')
 };
@@ -81,6 +82,7 @@ els.form.addEventListener('submit', (e) => {
   els.form.reset();
   els.priority.value = 'medium';
   toast(`${COACH}: locked in. Keep momentum.`);
+  showAchievement('save');
   render();
   els.text.focus();
 });
@@ -160,6 +162,7 @@ function handleAction(id, action, noteEl) {
   if (action === 'done') {
     note.done = true;
     toast(`${COACH}: good close.`);
+    showAchievement('done');
     persist();
     render();
     return;
@@ -170,6 +173,7 @@ function handleAction(id, action, noteEl) {
     base.setDate(base.getDate() + 1);
     note.due = toDateInput(base);
     toast(`${COACH}: nudged to tomorrow.`);
+    showAchievement('snooze');
     persist();
     render();
     return;
@@ -183,6 +187,7 @@ function handleAction(id, action, noteEl) {
       persist();
       render();
       toast('Removed. Keep the list clean.');
+      showAchievement('delete');
     }, 150);
   }
 }
@@ -248,7 +253,28 @@ function toast(message) {
   els.toast.textContent = message;
   els.toast.classList.add('show');
   clearTimeout(toast._timer);
-  toast._timer = setTimeout(() => els.toast.classList.remove('show'), 1700);
+  toast._timer = setTimeout(() => els.toast.classList.remove('show'), 2400);
+}
+
+function showAchievement(action) {
+  if (!els.achievement) return;
+
+  const messages = {
+    save: { icon: '🏆', title: 'Momentum saved', body: 'Note captured. Nice pace.' },
+    done: { icon: '✅', title: 'Win recorded', body: 'Task complete. Keep rolling.' },
+    snooze: { icon: '⏰', title: 'Smart deferral', body: 'Rescheduled for tomorrow.' },
+    delete: { icon: '🧹', title: 'Clean slate', body: 'Removed and tidied up.' }
+  };
+
+  const entry = messages[action];
+  if (!entry) return;
+
+  els.achievement.innerHTML = `<strong>${entry.icon} ${entry.title}</strong><span>${entry.body}</span>`;
+  els.achievement.classList.add('show');
+  clearTimeout(showAchievement._timer);
+  showAchievement._timer = setTimeout(() => {
+    els.achievement?.classList.remove('show');
+  }, 2200);
 }
 
 function setupVoiceCapture() {
