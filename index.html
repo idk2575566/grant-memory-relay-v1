@@ -9,34 +9,34 @@
 <body>
   <main class="app">
     <header class="hero">
-      <h1>Grant Memory Relay</h1>
-      <p>Capture fast. Follow through every day.</p>
+      <h1>Memory Relay ⚡</h1>
+      <p>Capture it now. Keep life moving.</p>
     </header>
 
     <section class="card" aria-labelledby="capture-title">
       <div class="card-head">
-        <h2 id="capture-title">Quick Capture</h2>
-        <span class="hint">&lt;10 seconds</span>
+        <h2 id="capture-title">Quick Capture ✍️</h2>
+        <span class="hint">Coach Milo: under 10s</span>
       </div>
       <form id="note-form" class="form-grid">
         <div class="field field-full">
-          <span>Quick category</span>
+          <span>Pick a lane</span>
           <div class="category-ctas" id="category-ctas">
-            <button type="button" class="btn-cta" data-category="Kids (Finley & Harrison)" data-priority="high">Kids (Finley & Harrison)</button>
-            <button type="button" class="btn-cta" data-category="Chloe Friends" data-priority="medium">Chloe Friends</button>
-            <button type="button" class="btn-cta" data-category="Couple Friends" data-priority="medium">Couple Friends</button>
-            <button type="button" class="btn-cta" data-category="Work" data-priority="medium">Work</button>
-            <button type="button" class="btn-cta" data-category="Things We Do" data-priority="low">Things We Do</button>
+            <button type="button" class="btn-cta" data-category="Kids (Finley & Harrison)" data-priority="high">🧒 Kids</button>
+            <button type="button" class="btn-cta" data-category="Chloe Friends" data-priority="medium">🫶 Chloe Friends</button>
+            <button type="button" class="btn-cta" data-category="Couple Friends" data-priority="medium">🥂 Couple Friends</button>
+            <button type="button" class="btn-cta" data-category="Work" data-priority="medium">💼 Work</button>
+            <button type="button" class="btn-cta" data-category="Things We Do" data-priority="low">🎯 Things We Do</button>
           </div>
         </div>
 
         <label class="field field-full">
-          <span>Note</span>
-          <textarea id="note-text" required maxlength="280" placeholder="What should I remember or do?"></textarea>
+          <span>What matters?</span>
+          <textarea id="note-text" required maxlength="280" placeholder="One clear note…"></textarea>
         </label>
 
         <label class="field">
-          <span>Due date (optional)</span>
+          <span>Due (optional)</span>
           <input id="note-due" type="date" />
         </label>
 
@@ -65,32 +65,32 @@
           </select>
         </label>
 
-        <button class="btn btn-primary field-full" type="submit">Save note</button>
+        <button class="btn btn-primary field-full" type="submit">Save note ✅</button>
       </form>
     </section>
 
     <section class="card" aria-labelledby="top3-title">
       <div class="card-head">
-        <h2 id="top3-title">Morning Top-3 Preview</h2>
-        <span class="pill">Simulated</span>
+        <h2 id="top3-title">Today’s Top 3 🌅</h2>
+        <span class="pill">Preview</span>
       </div>
       <ul id="top3-list" class="stack"></ul>
-      <p id="top3-empty" class="empty">No open notes yet. Add a note to build your top 3.</p>
+      <p id="top3-empty" class="empty">Milo says: clear slate. Add one next move.</p>
     </section>
 
     <section class="card" aria-labelledby="open-title">
       <div class="card-head">
-        <h2 id="open-title">Open Notes</h2>
+        <h2 id="open-title">Open Notes 📌</h2>
         <span id="open-count" class="pill">0 open</span>
       </div>
       <ul id="notes-list" class="stack"></ul>
-      <p id="notes-empty" class="empty">You’re clear right now. Capture a note to get started.</p>
+      <p id="notes-empty" class="empty">Nothing open. Capture your next action.</p>
     </section>
 
     <section class="card" aria-labelledby="digest-title">
       <div class="card-head">
-        <h2 id="digest-title">Daily Digest Preview (7:00 PM)</h2>
-        <span class="pill">Simulated</span>
+        <h2 id="digest-title">Evening Digest 🌙</h2>
+        <span class="pill">7:00 PM preview</span>
       </div>
       <div id="digest-box" class="digest"></div>
     </section>

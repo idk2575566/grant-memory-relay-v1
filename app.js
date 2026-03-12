@@ -1,6 +1,20 @@
 const KEY = 'grant-memory-relay-v1-notes';
+const COACH = 'Coach Milo';
 
 const priorityRank = { high: 0, medium: 1, low: 2 };
+
+const categoryIcons = {
+  'Kids (Finley & Harrison)': '🧒',
+  'Chloe Friends': '🫶',
+  'Couple Friends': '🥂',
+  Work: '💼',
+  'Things We Do': '🎯',
+  Personal: '✨',
+  Family: '🏡',
+  Health: '💪',
+  Errands: '🛒',
+  Other: '🗂️'
+};
 
 const els = {
   form: document.getElementById('note-form'),
@@ -26,7 +40,7 @@ els.categoryCtas.addEventListener('click', (e) => {
   if (!button) return;
   els.category.value = button.dataset.category;
   els.priority.value = button.dataset.priority || 'medium';
-  toast(`Set ${button.dataset.category} • ${capitalize(els.priority.value)} priority`);
+  toast(`Set: ${categoryChip(button.dataset.category)} • ${capitalize(els.priority.value)}`);
 });
 
 els.form.addEventListener('submit', (e) => {
@@ -47,7 +61,7 @@ els.form.addEventListener('submit', (e) => {
   persist();
   els.form.reset();
   els.priority.value = 'medium';
-  toast('Saved note ✅');
+  toast(`${COACH}: locked in. Keep momentum.`);
   render();
   els.text.focus();
 });
@@ -91,18 +105,18 @@ function render() {
       <div class="note-main"></div>
       <div class="note-meta"></div>
       <div class="note-actions">
-        <a class="btn-calendar" href="${buildCalendarUrl(n)}" target="_blank" rel="noopener noreferrer">Add to Calendar</a>
-        <button class="btn-done" data-action="done">Done</button>
-        <button class="btn-snooze" data-action="snooze">Snooze +1 day</button>
-        <button class="btn-delete" data-action="delete">Delete</button>
+        <a class="btn-calendar" href="${buildCalendarUrl(n)}" target="_blank" rel="noopener noreferrer">📅 Calendar</a>
+        <button class="btn-done" data-action="done">✅ Done</button>
+        <button class="btn-snooze" data-action="snooze">⏰ +1 day</button>
+        <button class="btn-delete" data-action="delete">🗑️ Delete</button>
       </div>
     `;
 
     li.querySelector('.note-main').textContent = n.text;
     const metaBits = [
-      `Category: ${n.category}`,
-      `Priority: ${capitalize(n.priority)}`,
-      n.due ? `Due: ${formatDate(n.due)}` : 'No due date'
+      categoryChip(n.category),
+      `⚡ ${capitalize(n.priority)}`,
+      n.due ? `🗓️ ${formatDate(n.due)}` : 'No due date'
     ];
     li.querySelector('.note-meta').textContent = metaBits.join(' • ');
 
@@ -125,20 +139,20 @@ function handleAction(id, action) {
 
   if (action === 'done') {
     note.done = true;
-    toast('Marked done 🎉');
+    toast(`${COACH}: good close.`);
   }
 
   if (action === 'snooze') {
     const base = note.due ? new Date(note.due) : new Date();
     base.setDate(base.getDate() + 1);
     note.due = toDateInput(base);
-    toast('Snoozed to tomorrow ⏰');
+    toast(`${COACH}: nudged to tomorrow.`);
   }
 
   if (action === 'delete') {
     if (!confirm('Delete this note?')) return;
     notes = notes.filter(n => n.id !== id);
-    toast('Note deleted');
+    toast('Removed. Keep the list clean.');
   }
 
   persist();
@@ -154,7 +168,7 @@ function renderTop3(open) {
     li.className = 'note';
     li.innerHTML = `<div class="note-main"></div><div class="note-meta"></div>`;
     li.querySelector('.note-main').textContent = n.text;
-    li.querySelector('.note-meta').textContent = `${capitalize(n.priority)} priority${n.due ? ` • due ${formatDate(n.due)}` : ''}`;
+    li.querySelector('.note-meta').textContent = `${categoryChip(n.category)} • ${capitalize(n.priority)}${n.due ? ` • due ${formatDate(n.due)}` : ''}`;
     els.top3List.appendChild(li);
   }
 }
@@ -166,12 +180,16 @@ function renderDigest(open) {
   const next = open[0];
 
   els.digest.innerHTML = `
-    <strong>Tonight's simulated summary:</strong><br>
-    • Open notes: ${open.length}<br>
-    • High-priority items: ${high}<br>
+    <strong>${COACH} check-in:</strong><br>
+    • Open: ${open.length}<br>
+    • High focus: ${high}<br>
     • Due today: ${dueToday}<br>
-    • Next focus: ${next ? escapeHtml(next.text) : 'No pending items — nice.'}
+    • Next move: ${next ? escapeHtml(next.text) : 'You’re clear. Protect that.'}
   `;
+}
+
+function categoryChip(category) {
+  return `${categoryIcons[category] || '🗂️'} ${category}`;
 }
 
 function buildCalendarUrl(note) {
